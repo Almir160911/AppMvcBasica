@@ -9,6 +9,8 @@ using AppMvcBasica.Data;
 using AppMvcBasica.Models;
 using Microsoft.AspNetCore.Authorization;
 
+//... teste github 1
+
 namespace AppMvcBasica.Controllers
 {
     [Authorize]
