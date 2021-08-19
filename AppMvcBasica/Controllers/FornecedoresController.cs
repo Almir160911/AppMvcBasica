@@ -11,6 +11,10 @@ using Microsoft.AspNetCore.Authorization;
 
 //... teste github 1
 
+//... teste github 2
+
+
+
 namespace AppMvcBasica.Controllers
 {
     [Authorize]
