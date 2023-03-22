@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Interfaces\**" />
+    <Content Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
+    <None Remove="Interfaces\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Data\Migrations\20230322044122_ApplicationDbContextModelSnapshot.cs" />
     <Compile Remove="Data\Migrations\20230322044122_ApplicationDbContextModelSnapshot.Designer.cs" />
   </ItemGroup>
@@ -24,6 +31,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0" />
+    <PackageReference Include="Refit" Version="6.3.2" />
   </ItemGroup>
 
   <ItemGroup>
