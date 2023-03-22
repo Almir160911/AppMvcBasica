@@ -18,11 +18,11 @@ using Microsoft.AspNetCore.Authorization;
 namespace AppMvcBasica.Controllers
 {
     [Authorize]
-    public class FornecedoresController : Controller
+    public class ClientesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public FornecedoresController(ApplicationDbContext context)
+        public ClientesController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -30,7 +30,7 @@ namespace AppMvcBasica.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Fornecedores.ToListAsync());
+            return View(await _context.Clientes.ToListAsync());
         }
 
         [AllowAnonymous]
@@ -41,33 +41,34 @@ namespace AppMvcBasica.Controllers
                 return NotFound();
             }
 
-            var fornecedor = await _context.Fornecedores
+            var Cliente = await _context.Clientes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (fornecedor == null)
+            if (Cliente == null)
             {
                 return NotFound();
             }
 
-            return View(fornecedor);
+            return View(Cliente);
         }
 
         public IActionResult Create()
         {
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClientId", "Logradouro");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Fornecedor fornecedor)
+        public async Task<IActionResult> Create(Cliente Cliente)
         {
             if (ModelState.IsValid)
             {
-                fornecedor.Id = Guid.NewGuid();
-                _context.Add(fornecedor);
+                Cliente.Id = Guid.NewGuid();
+                _context.Add(Cliente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(fornecedor);
+            return View(Cliente);
         }
 
         public async Task<IActionResult> Edit(Guid? id)
@@ -77,19 +78,19 @@ namespace AppMvcBasica.Controllers
                 return NotFound();
             }
 
-            var fornecedor = await _context.Fornecedores.FindAsync(id);
-            if (fornecedor == null)
+            var Cliente = await _context.Clientes.FindAsync(id);
+            if (Cliente == null)
             {
                 return NotFound();
             }
-            return View(fornecedor);
+            return View(Cliente);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, Fornecedor fornecedor)
+        public async Task<IActionResult> Edit(Guid id, Cliente Cliente)
         {
-            if (id != fornecedor.Id)
+            if (id != Cliente.Id)
             {
                 return NotFound();
             }
@@ -98,12 +99,12 @@ namespace AppMvcBasica.Controllers
             {
                 try
                 {
-                    _context.Update(fornecedor);
+                    _context.Update(Cliente);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FornecedorExists(fornecedor.Id))
+                    if (!ClienteExists(Cliente.Id))
                     {
                         return NotFound();
                     }
@@ -114,7 +115,7 @@ namespace AppMvcBasica.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(fornecedor);
+            return View(Cliente);
         }
 
         public async Task<IActionResult> Delete(Guid? id)
@@ -124,29 +125,29 @@ namespace AppMvcBasica.Controllers
                 return NotFound();
             }
 
-            var fornecedor = await _context.Fornecedores
+            var Cliente = await _context.Clientes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (fornecedor == null)
+            if (Cliente == null)
             {
                 return NotFound();
             }
 
-            return View(fornecedor);
+            return View(Cliente);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var fornecedor = await _context.Fornecedores.FindAsync(id);
-            _context.Fornecedores.Remove(fornecedor);
+            var Cliente = await _context.Clientes.FindAsync(id);
+            _context.Clientes.Remove(Cliente);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FornecedorExists(Guid id)
+        private bool ClienteExists(Guid id)
         {
-            return _context.Fornecedores.Any(e => e.Id == id);
+            return _context.Clientes.Any(e => e.Id == id);
         }
     }
 }

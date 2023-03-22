@@ -1,30 +1,31 @@
-﻿@model IEnumerable<AppMvcBasica.Models.Produto>
+﻿@model IEnumerable<AppMvcBasica.Models.Endereco>
 
 @{
-    ViewData["Title"] = "Lista de Produtos";
+    ViewData["Title"] = "Lista de Clientes";
 }
 
 <h1>@ViewData["Title"]</h1>
 <hr />
 
 <p>
-    <a class="btn btn-info" asp-action="Create">Novo Produto</a>
+    <a class="btn btn-info" asp-action="Create">Novo Cliente</a>
 </p>
 <table class="table table-hover">
     <thead class="thead-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                @Html.DisplayNameFor(model => model.Logradouro)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Valor)
+                @Html.DisplayNameFor(model => model.Numero)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ativo)
+                @Html.DisplayNameFor(model => model.Bairro)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Fornecedor)
+                @Html.DisplayNameFor(model => model.Estado)
             </th>
+
             <th></th>
         </tr>
     </thead>
@@ -33,16 +34,19 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Nome)
+                    @Html.DisplayFor(modelItem => item.Logradouro)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Valor)
+                    @Html.DisplayFor(modelItem => item.Numero)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Ativo)
+                    @Html.DisplayFor(modelItem => item.Bairro)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Fornecedor.Nome)
+                    @Html.DisplayFor(modelItem => item.Cidade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
                 </td>
                 <td class="text-right">
                     <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Editar</a>

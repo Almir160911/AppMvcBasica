@@ -12,11 +12,11 @@ using Microsoft.AspNetCore.Authorization;
 namespace AppMvcBasica.Controllers
 {
     [Authorize]
-    public class ProdutosController : Controller
+    public class EnderecosController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ProdutosController(ApplicationDbContext context)
+        public EnderecosController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -24,7 +24,7 @@ namespace AppMvcBasica.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Produtos.Include(p => p.Fornecedor);
+            var applicationDbContext = _context.Enderecos.Include(p => p.Cliente);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,36 +36,36 @@ namespace AppMvcBasica.Controllers
                 return NotFound();
             }
 
-            var produto = await _context.Produtos
-                .Include(p => p.Fornecedor)
+            var Endereco = await _context.Enderecos
+                .Include(p => p.Cliente)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (produto == null)
+            if (Endereco == null)
             {
                 return NotFound();
             }
 
-            return View(produto);
+            return View(Endereco);
         }
 
         public IActionResult Create()
         {
-            ViewData["FornecedorId"] = new SelectList(_context.Fornecedores, "Id", "Nome");
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Nome");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Produto produto)
+        public async Task<IActionResult> Create(Endereco Endereco)
         {
             if (ModelState.IsValid)
             {
-                produto.Id = Guid.NewGuid();
-                _context.Add(produto);
+                Endereco.Id = Guid.NewGuid();
+                _context.Add(Endereco);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FornecedorId"] = new SelectList(_context.Fornecedores, "Id", "Nome", produto.FornecedorId);
-            return View(produto);
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Nome", Endereco.ClienteId);
+            return View(Endereco);
         }
 
         public async Task<IActionResult> Edit(Guid? id)
@@ -75,20 +75,20 @@ namespace AppMvcBasica.Controllers
                 return NotFound();
             }
 
-            var produto = await _context.Produtos.FindAsync(id);
-            if (produto == null)
+            var Endereco = await _context.Enderecos.FindAsync(id);
+            if (Endereco == null)
             {
                 return NotFound();
             }
-            ViewData["FornecedorId"] = new SelectList(_context.Fornecedores, "Id", "Nome", produto.FornecedorId);
-            return View(produto);
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Nome", Endereco.ClienteId);
+            return View(Endereco);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, Produto produto)
+        public async Task<IActionResult> Edit(Guid id, Endereco Endereco)
         {
-            if (id != produto.Id)
+            if (id != Endereco.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace AppMvcBasica.Controllers
             {
                 try
                 {
-                    _context.Update(produto);
+                    _context.Update(Endereco);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProdutoExists(produto.Id))
+                    if (!EnderecoExists(Endereco.Id))
                     {
                         return NotFound();
                     }
@@ -113,8 +113,8 @@ namespace AppMvcBasica.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FornecedorId"] = new SelectList(_context.Fornecedores, "Id", "Nome", produto.FornecedorId);
-            return View(produto);
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "Id", "Nome", Endereco.ClienteId);
+            return View(Endereco);
         }
 
         public async Task<IActionResult> Delete(Guid? id)
@@ -124,30 +124,30 @@ namespace AppMvcBasica.Controllers
                 return NotFound();
             }
 
-            var produto = await _context.Produtos
-                .Include(p => p.Fornecedor)
+            var Endereco = await _context.Enderecos
+                .Include(p => p.Cliente)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (produto == null)
+            if (Endereco == null)
             {
                 return NotFound();
             }
 
-            return View(produto);
+            return View(Endereco);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var produto = await _context.Produtos.FindAsync(id);
-            _context.Produtos.Remove(produto);
+            var Endereco = await _context.Enderecos.FindAsync(id);
+            _context.Enderecos.Remove(Endereco);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProdutoExists(Guid id)
+        private bool EnderecoExists(Guid id)
         {
-            return _context.Produtos.Any(e => e.Id == id);
+            return _context.Enderecos.Any(e => e.Id == id);
         }
     }
 }

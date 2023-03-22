@@ -6,7 +6,7 @@ namespace AppMvcBasica.Models
 {
     public class Endereco : Entity
     {
-        public Guid FornecedorId { get; set; }
+        public string ClienteId { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(200, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
@@ -35,6 +35,6 @@ namespace AppMvcBasica.Models
         public string Estado { get; set; }
 
         /* EF Relation */
-        public Fornecedor Fornecedor { get; set; }
+        public Cliente Cliente { get; set; }
     }
 }
