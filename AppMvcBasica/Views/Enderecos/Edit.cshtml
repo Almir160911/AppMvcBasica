@@ -18,6 +18,12 @@
                 <span asp-validation-for="ClienteId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Cep" class="control-label"></label>
+
+                <input asp-for="Cep" id="Cep" class=" form-control" />
+                <span asp-validation-for="Cep" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Logradouro" class="control-label"></label>
                 <input asp-for="Logradouro" class="form-control" />
                 <span asp-validation-for="Logradouro" class="text-danger"></span>
@@ -26,6 +32,11 @@
                 <label asp-for="Numero" class="control-label"></label>
                 <input asp-for="Numero" class="form-control" />
                 <span asp-validation-for="Numero" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Complemento" class="control-label"></label>
+                <input asp-for="Complemento" id="Complemento" class="form-control" />
+                <span asp-validation-for="Complemento" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Bairro" class="control-label"></label>
@@ -44,7 +55,7 @@
             </div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Salvar" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -56,4 +67,7 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ConsultaCep");
+    }
 }

@@ -1,20 +1,20 @@
 ﻿@model IEnumerable<AppMvcBasica.Models.Endereco>
 
 @{
-    ViewData["Title"] = "Lista de Enderecos";
+    ViewData["Title"] = "Lista de Endereços";
 }
 
 <h1>@ViewData["Title"]</h1>
 <hr />
 
 <p>
-    <a class="btn btn-info" asp-action="Create">Novo Endereco</a>
+    <a class="btn btn-info" asp-action="Create">Novo Endereço</a>
 </p>
 <table class="table table-hover">
     <thead class="thead-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Cliente)
+                @Html.DisplayNameFor(model => model.ClienteId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Logradouro)
@@ -42,7 +42,11 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Cliente.Nome)
+                    @* Não está gravando a coluna Clienteid1 e por isso não está apresentando o nome do Cliente@
+                    @* por falta de tempo não posso analisar os relacionamentos realizados pelo Entity Framework@
+                    @* Mostrando na página o ClienteID para a visualização de mais de um endereço para o mesmo cliente@
+                    @* @Html.DisplayFor(modelItem => item.Cliente.Nome)*@
+                    @Html.DisplayFor(modelItem => item.ClienteId)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Logradouro)
@@ -63,9 +67,9 @@
                     @Html.DisplayFor(modelItem => item.Cep)
                 </td>
                 <td class="text-right">
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
-                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Excluir </a>
+                    <a  asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                    <a  asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                    <a  asp-action="Delete" asp-route-id="@item.Id">Excluir </a>
                 </td>
             </tr>
         }
